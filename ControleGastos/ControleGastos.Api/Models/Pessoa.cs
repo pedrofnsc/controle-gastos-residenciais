@@ -12,6 +12,7 @@ namespace ControleGastos.Api.Models
         public string Nome { get; set; }
 
         [Required(ErrorMessage = "A Idade é obrigatória.")]
+        [Range(0, 150, ErrorMessage = "A idade não pode ser negativa.")]
         public int Idade { get; set; }
     }
 }
