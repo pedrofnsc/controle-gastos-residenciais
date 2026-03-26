@@ -1,4 +1,5 @@
 ﻿using ControleGastos.Api.Data;
+using ControleGastos.Api.DTO;
 using ControleGastos.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,39 @@ namespace ControleGastos.Api.Controllers
             context.Pessoas.Remove(pessoa);
             await context.SaveChangesAsync();
             return NoContent();
+        }
+
+        [HttpGet("totais")]
+        public async Task<ActionResult<RelatorioTotaisPessoaDto>> GetTotaisPorPessoa()
+        {
+            var pessoas = await context.Pessoas.ToListAsync();
+            var transacoes = await context.Transacoes.ToListAsync();
+
+            var pessoasComTotais = pessoas.Select(p => new TotaisPessoaDto
+            {
+                Nome = p.Nome,
+                TotalReceitas = transacoes
+                    .Where(t => t.PessoaId == p.Id && t.Tipo == TipoTransacao.Receita)
+                    .Sum(t => t.Valor),
+                TotalDespesas = transacoes
+                    .Where(t => t.PessoaId == p.Id && t.Tipo == TipoTransacao.Despesa)
+                    .Sum(t => t.Valor)
+            }).ToList();
+
+            foreach (var pessoa in pessoasComTotais)
+            {
+                pessoa.Saldo = pessoa.TotalReceitas - pessoa.TotalDespesas;
+            }
+
+            var relatorio = new RelatorioTotaisPessoaDto
+            {
+                Pessoas = pessoasComTotais,
+                TotalGeralReceitas = pessoasComTotais.Sum(p => p.TotalReceitas),
+                TotalGeralDespesas = pessoasComTotais.Sum(p => p.TotalDespesas),
+                SaldoLiquidoGeral = pessoasComTotais.Sum(p => p.Saldo)
+            };
+
+            return Ok(relatorio);
         }
     }
 }
