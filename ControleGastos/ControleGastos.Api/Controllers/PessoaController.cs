@@ -9,7 +9,6 @@ namespace ControleGastos.Api.Controllers
     [ApiController]
     public class PessoaController(AppDbContext context) : ControllerBase
     {
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pessoa>>> GetPessoas()
         {
