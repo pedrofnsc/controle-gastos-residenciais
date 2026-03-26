@@ -23,12 +23,12 @@ namespace ControleGastos.Api.Models
         public int CategoriaId { get; set; }
 
         [ForeignKey("CategoriaId")]
-        public Categoria Categoria { get; set; }
+        public Categoria? Categoria { get; set; }
 
         [Required(ErrorMessage = "A Pessoa é obrigatória.")]
         public int PessoaId { get; set; }
 
         [ForeignKey("PessoaId")]
-        public Pessoa Pessoa { get; set; }
+        public Pessoa? Pessoa { get; set; }
     }
 }
