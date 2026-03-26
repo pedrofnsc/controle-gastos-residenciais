@@ -22,24 +22,5 @@ namespace ControleGastos.Api.Controllers
             await context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetCategorias), new { id = categoria.Id }, categoria);
         }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategoria(int id, Categoria categoria)
-        {
-            if (id != categoria.Id) return BadRequest();
-            context.Entry(categoria).State = EntityState.Modified;
-            await context.SaveChangesAsync();
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategoria(int id)
-        {
-            var categoria = await context.Categorias.FindAsync(id);
-            if (categoria == null) return NotFound();
-            context.Categorias.Remove(categoria);
-            await context.SaveChangesAsync();
-            return NoContent();
-        }
     }
 }
