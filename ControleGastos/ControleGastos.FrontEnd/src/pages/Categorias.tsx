@@ -114,14 +114,7 @@ export function Categorias() {
               <div className="modal-body">
                 <div className="mb-3">
                   <label className="form-label">Descrição</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    value={descricao} 
-                    onChange={e => setDescricao(e.target.value)} 
-                    required 
-                    maxLength={100} 
-                  />
+                  <input type="text" className="form-control" value={descricao} onChange={e => setDescricao(e.target.value)} required maxLength={400}/>
                 </div>
                 
                 <div className="mb-3">
