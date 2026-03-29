@@ -1,0 +1,3 @@
+button:hover, .btn:hover, .nav-link:hover, .navbar-brand:hover {
+  transform: scale(1.05); 
+}
