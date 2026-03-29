@@ -64,8 +64,7 @@ export function Transacoes() {
   };  
 
   //#region Filtros das regras de negócio.
-  const pessoasFiltradas = tipo === TipoFinalidade.Receita ? pessoas.filter(p => p.idade >= 18) : pessoas; //Selecionar somente maiores de 18 anos nos dropdowns.
-
+  const pessoasFiltradas = tipo === TipoFinalidade.Receita ? pessoas.filter(p => p.idade >= 18) : pessoas; //Selecionar somente maiores de 18 anos para os dropdowns de Receita.
 
   const categoriasFiltradas = categorias.filter(c => {  //Selecionar as Categorias dos seus respectivos tipos nos dropdowns.
     if (tipo === TipoTransacao.Receita){
