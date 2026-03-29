@@ -90,6 +90,8 @@ export function Transacoes() {
         limparFormulario();
         carregarDados();
         document.getElementById('btnFecharModalTransacao')?.click();
+      } else {
+        alert("Erro ao salvar os dados.");
       }
     });
   };
@@ -131,7 +133,7 @@ export function Transacoes() {
               <td>{pessoas.find(p => p.id === t.pessoaId)?.nome}</td>
               <td>{categorias.find(c => c.id === t.categoriaId)?.descricao}</td>
               <td>
-                <span className={`badge ${t.tipo === TipoFinalidade.Receita ? 'bg-success' : 'bg-danger'}`}>
+                <span className={`badge ${t.tipo === TipoTransacao.Receita ? 'bg-success' : 'bg-danger'}`}>
                   {t.tipo === TipoFinalidade.Receita ? 'Receita' : 'Despesa'}
                 </span>
               </td>
@@ -140,6 +142,13 @@ export function Transacoes() {
               </td>
             </tr>
           ))}
+          {transacoes.length === 0 && (
+            <tr>
+              <td colSpan={3} className="text-center text-muted py-4">
+                Nenhuma transação cadastrada.
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
 
@@ -153,10 +162,9 @@ export function Transacoes() {
             </div>
             <form onSubmit={salvarTransacao}>
               <div className="modal-body">
-                
                 <div className="mb-3">
                   <label className="form-label">Descrição</label>
-                  <input type="text" className="form-control" value={descricao} onChange={e => setDescricao(e.target.value)} required />
+                  <input type="text" className="form-control" value={descricao} onChange={e => setDescricao(e.target.value)} required maxLength={400}/>
                 </div>
 
                 <div className="row">
@@ -171,8 +179,8 @@ export function Transacoes() {
                       setPessoaId(0); 
                       setCategoriaId(0);
                     }}>
-                      <option value={1}>Despesa</option>
-                      <option value={2}>Receita</option>
+                      <option value={TipoTransacao.Despesa}>Despesa</option>
+                      <option value={TipoTransacao.Receita}>Receita</option>
                     </select>
                   </div>
                 </div>
