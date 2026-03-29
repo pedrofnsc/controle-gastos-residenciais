@@ -114,6 +114,13 @@ export function Pessoas() {
               </td>
             </tr>
           ))}
+          {pessoas.length === 0 && (
+            <tr>
+              <td colSpan={3} className="text-center text-muted py-4">
+                Nenhuma pessoa cadastrada.
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
 
