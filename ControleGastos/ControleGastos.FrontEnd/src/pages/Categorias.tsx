@@ -18,7 +18,7 @@ export function Categorias() {
   const [finalidade, setFinalidade] = useState<number>(TipoFinalidade.Despesa);
 
   const carregarCategorias = () => {
-    fetch('https://localhost:7224/api/Categoria')
+    fetch('http://localhost:5078/api/Categoria')
       .then(res => res.json())
       .then(data => setCategorias(data))
   };
@@ -37,7 +37,7 @@ export function Categorias() {
   const salvarCategoria = (e: React.FormEvent) => {
     e.preventDefault();
 
-    fetch('https://localhost:7224/api/Categoria', {
+    fetch('http://localhost:5078/api/Categoria', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ descricao, finalidade })

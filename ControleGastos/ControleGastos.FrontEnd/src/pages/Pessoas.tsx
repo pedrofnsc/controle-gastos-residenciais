@@ -13,7 +13,7 @@ export function Pessoas() {
   const [idEdit, setIdEdit] = useState<number | null>(null);
 
   const carregarPessoas = () => {
-    fetch('https://localhost:7224/api/Pessoa')
+    fetch('http://localhost:5078/api/Pessoa')
       .then(res => res.json())
       .then(data => setPessoas(data));
   };
@@ -25,7 +25,7 @@ export function Pessoas() {
   // Função para excluir o cadastro de uma pessoa.
   const excluirPessoa = (id: number) => {
     if (window.confirm("Deseja realmente excluir esta pessoa e suas transações?")) {
-      fetch(`https://localhost:7224/api/Pessoa/${id}`, { method: 'DELETE' })
+      fetch(`http://localhost:5078/api/Pessoa/${id}`, { method: 'DELETE' })
         .then(res => {
           if (res.ok) carregarPessoas();
         });
@@ -52,7 +52,7 @@ export function Pessoas() {
     
     const dados = { nome, idade };
     const metodo = idEdit ? 'PUT' : 'POST';
-    const url = idEdit ? `https://localhost:7224/api/Pessoa/${idEdit}` : 'https://localhost:7224/api/Pessoa';
+    const url = idEdit ? `http://localhost:5078/api/Pessoa/${idEdit}` : 'http://localhost:5078/api/Pessoa';
 
     fetch(url, {
       method: metodo,

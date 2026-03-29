@@ -53,9 +53,9 @@ export function Transacoes() {
 
   const carregarDados = async () => {
     const [resT, resP, resC] = await Promise.all([
-      fetch('https://localhost:7224/api/Transacao'),
-      fetch('https://localhost:7224/api/Pessoa'),
-      fetch('https://localhost:7224/api/Categoria')
+      fetch('http://localhost:5078/api/Transacao'),
+      fetch('http://localhost:5078/api/Pessoa'),
+      fetch('http://localhost:5078/api/Categoria')
     ]);
 
     setTransacoes(await resT.json());
@@ -82,7 +82,7 @@ export function Transacoes() {
     // Função para criar uma nova Transação
     const novaTransacao = { descricao, valor, tipo, pessoaId, categoriaId };
 
-    fetch('https://localhost:7224/api/Transacao', {
+    fetch('http://localhost:5078/api/Transacao', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(novaTransacao)

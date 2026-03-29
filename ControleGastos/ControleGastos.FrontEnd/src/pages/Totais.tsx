@@ -36,12 +36,12 @@ export function Totais() {
 
   // Buscas dos totais
   useEffect(() => {
-    fetch('https://localhost:7224/api/Pessoa/totais')
+    fetch('http://localhost:5078/api/Pessoa/totais')
       .then(res => res.json())
       .then(data => setResumoPessoas(data))
       .catch(err => console.error("Erro Pessoas:", err));
 
-    fetch('https://localhost:7224/api/Categoria/totais')
+    fetch('http://localhost:5078/api/Categoria/totais')
       .then(res => res.json())
       .then(data => setResumoCategorias(data))
       .catch(err => console.error("Erro Categorias:", err));
