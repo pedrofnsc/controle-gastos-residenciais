@@ -44,7 +44,7 @@ namespace ControleGastos.Api.Controllers
         }
 
         [HttpGet("totais")]
-        public async Task<ActionResult<RelatorioTotaisPessoaDto>> GetTotaisPorPessoa()
+        public async Task<ActionResult<RelatorioTotaisPessoaDto>> GetTotaisPorPessoa() //Calculando a soma total de receitas, despesas e saldo.
         {
             var pessoas = await context.Pessoas.ToListAsync();
             var transacoes = await context.Transacoes.ToListAsync();
