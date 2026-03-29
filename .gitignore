@@ -486,3 +486,8 @@ node_modules/
 dist/
 .env
 .env.local
+
+# Banco de Dados SQLite
+*.db
+*.db-shm
+*.db-wal
