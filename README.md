@@ -58,3 +58,4 @@ npm run dev
 ## Observações de Desenvolvimento
 
 - **Banco de Dados:** Ao rodar o comando `database update`, um arquivo chamado `ControleGastos.db` será criado na pasta da API, contendo toda a estrutura necessária.
+- **Local Host:** A URL da API está centralizada no arquivo src/api.ts. Caso seu ambiente utilize uma porta diferente de 5078, basta alterar este arquivo.
