@@ -16,6 +16,7 @@ export function Categorias() {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [descricao, setDescricao] = useState('');
   const [finalidade, setFinalidade] = useState<number>(TipoFinalidade.Despesa);
+  const [showModal, setShowModal] = useState(false);
 
   const carregarCategorias = () => {
     fetch('http://localhost:5078/api/Categoria')
@@ -46,7 +47,7 @@ export function Categorias() {
       if (res.ok) {
         limparFormulario();
         carregarCategorias();
-        document.getElementById('btnFecharModalCategoria')?.click();
+        setShowModal(false);
       } else {
         alert("Erro ao salvar a categoria.");
       }
@@ -66,12 +67,7 @@ export function Categorias() {
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Gerenciar Categorias</h2>
-        <button 
-          className="btn btn-primary fw-bold" 
-          data-bs-toggle="modal" 
-          data-bs-target="#modalCategoria"
-          onClick={limparFormulario}
-        >
+        <button className="btn btn-primary fw-bold" onClick={() => { limparFormulario(); setShowModal(true);}}>
           Cadastrar Categoria
         </button>
       </div>
@@ -103,12 +99,13 @@ export function Categorias() {
       </table>
 
       {/* Criação de um modal para CREATE das categorias */}
-      <div className="modal fade" id="modalCategoria" tabIndex={-1} aria-hidden="true">
-        <div className="modal-dialog">
+      {showModal && (
+      <div className="modal show d-block modal-anim-fade" id="modalCategoria" tabIndex={-1}>
+        <div className="modal-dialog modal-anim-slide">
           <div className="modal-content">
             <div className="modal-header bg-light">
               <h5 className="modal-title">Cadastrar Categoria</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" id="btnFecharModalCategoria"></button>
+              <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
             </div>
             <form onSubmit={salvarCategoria}>
               <div className="modal-body">
@@ -132,13 +129,15 @@ export function Categorias() {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Cancelar</button>
                 <button type="submit" className="btn btn-primary fw-bold">Salvar</button>
               </div>
             </form>
           </div>
         </div>
       </div>
+      )}
+      {showModal && <div className="modal-backdrop show modal-anim-fade-backdrop"></div>}
     </div>
   );
 }

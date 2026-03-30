@@ -1,3 +1,32 @@
 button:hover, .btn:hover, .nav-link:hover, .navbar-brand:hover {
   transform: scale(1.05); 
 }
+
+/* Animações para os Modais */
+@keyframes fadeIn { 
+  from { opacity: 0; } 
+  to { opacity: 1; } 
+}
+
+@keyframes fadeInBackdrop {
+  from { opacity: 0; }
+  to { opacity: 0.5; }
+}
+
+@keyframes slideDown { 
+  from { opacity: 0; transform: translateY(-30px); } 
+  to { opacity: 1; transform: translateY(0); } 
+}
+
+.modal-anim-fade {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+.modal-anim-slide {
+  animation: slideDown 0.3s ease-out forwards;
+}
+
+/* Nova classe para o fundo */
+.modal-anim-fade-backdrop {
+  animation: fadeInBackdrop 0.2s ease-out forwards;
+}

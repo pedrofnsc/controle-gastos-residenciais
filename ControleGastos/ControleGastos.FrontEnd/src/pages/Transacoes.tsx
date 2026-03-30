@@ -40,7 +40,7 @@ export function Transacoes() {
   const [transacoes, setTransacoes] = useState<Transacao[]>([]);
   const [pessoas, setPessoas] = useState<Pessoa[]>([]);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
-
+  const [showModal, setShowModal] = useState(false);
   const [descricao, setDescricao] = useState('');
   const [valor, setValor] = useState<number>(0);
   const [tipo, setTipo] = useState<number>(TipoTransacao.Despesa);
@@ -89,7 +89,7 @@ export function Transacoes() {
       if (res.ok) {
         limparFormulario();
         carregarDados();
-        document.getElementById('btnFecharModalTransacao')?.click();
+        setShowModal(false)
       } else {
         alert("Erro ao salvar os dados.");
       }
@@ -109,7 +109,7 @@ export function Transacoes() {
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Gerenciar Transações</h2>
-        <button className="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#modalTransacao" onClick={limparFormulario}>
+        <button className="btn btn-primary fw-bold" onClick={() => { limparFormulario(); setShowModal(true); }}>
           Cadastrar Transação
         </button>
       </div>
@@ -153,12 +153,13 @@ export function Transacoes() {
       </table>
 
       {/* Modal para CREATE das transações */}
-      <div className="modal fade" id="modalTransacao" tabIndex={-1} aria-hidden="true">
-        <div className="modal-dialog">
+      {showModal && (
+      <div className="modal show d-block modal-anim-fade" id="modalTransacao" tabIndex={-1}>
+        <div className="modal-dialog modal-anim-slide">
           <div className="modal-content">
             <div className="modal-header bg-light">
               <h5 className="modal-title">Cadastrar Transação</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" id="btnFecharModalTransacao"></button>
+              <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
             </div>
             <form onSubmit={salvarTransacao}>
               <div className="modal-body">
@@ -170,7 +171,12 @@ export function Transacoes() {
                 <div className="row">
                   <div className="col-md-6 mb-3">
                     <label className="form-label">Valor</label>
-                    <input type="number" step="0.01" min="0.01" className="form-control" value={valor || ''} onChange={e => setValor(Number(e.target.value))} required />
+                    <input type="number" step="0.01" min="0.01"
+                      className="form-control" value={valor || ''}
+                      onChange={e => setValor(Number(e.target.value))}
+                      onFocus={(e) => { if (e.target.value === '0') e.target.value = ''; }} 
+                      onBlur={(e) => { if (e.target.value === '') e.target.value = '0'; }} 
+                      required />
                   </div>
                   <div className="col-md-6 mb-3">
                     <label className="form-label">Tipo</label>
@@ -207,7 +213,7 @@ export function Transacoes() {
 
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Cancelar</button>
                 <button type="submit" className="btn btn-primary fw-bold" disabled={pessoaId === 0 || categoriaId === 0}>
                   Confirmar
                 </button>
@@ -216,6 +222,8 @@ export function Transacoes() {
           </div>
         </div>
       </div>
+      )}
+      {showModal && <div className="modal-backdrop show modal-anim-fade-backdrop"></div>}
     </div>
   );
 }

@@ -11,6 +11,7 @@ export function Pessoas() {
   const [nome, setNome] = useState('');
   const [idade, setIdade] = useState<number | string>('');
   const [idEdit, setIdEdit] = useState<number | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   const carregarPessoas = () => {
     fetch('http://localhost:5078/api/Pessoa')
@@ -37,6 +38,7 @@ export function Pessoas() {
     setIdEdit(p.id);
     setNome(p.nome);
     setIdade(p.idade);
+    setShowModal(true);
   };
 
   // Função para limpar os campos.
@@ -63,7 +65,7 @@ export function Pessoas() {
       if (res.ok) {
         limparFormulario();
         carregarPessoas();
-        document.getElementById('btnFecharModal')?.click();
+        setShowModal(false);
       } else {
         alert("Erro ao salvar os dados.");
       }
@@ -74,12 +76,7 @@ export function Pessoas() {
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Gerenciar Pessoas</h2>
-        <button 
-          className="btn btn-primary fw-bold" 
-          data-bs-toggle="modal" 
-          data-bs-target="#modalPessoa"
-          onClick={limparFormulario}
-        >
+        <button className="btn btn-primary fw-bold" onClick={() => { limparFormulario(); setShowModal(true); }}>
           Cadastrar Pessoa
         </button>
       </div>
@@ -100,12 +97,7 @@ export function Pessoas() {
               <td>{p.nome}</td>
               <td>{p.idade}</td>
               <td className="text-center">
-                <button 
-                  className="btn btn-sm btn-warning me-2 fw-bold" 
-                  data-bs-toggle="modal" 
-                  data-bs-target="#modalPessoa"
-                  onClick={() => prepararEdicao(p)}
-                >
+                <button className="btn btn-sm btn-warning me-2 fw-bold" onClick={() => prepararEdicao(p)}>
                   Editar
                 </button>
                 <button className="btn btn-sm btn-danger fw-bold" onClick={() => excluirPessoa(p.id)}>
@@ -116,7 +108,7 @@ export function Pessoas() {
           ))}
           {pessoas.length === 0 && (
             <tr>
-              <td colSpan={3} className="text-center text-muted py-4">
+              <td colSpan={4} className="text-center text-muted py-4">
                 Nenhuma pessoa cadastrada.
               </td>
             </tr>
@@ -125,12 +117,13 @@ export function Pessoas() {
       </table>
 
       {/* Modal para CREATE e EDIT das pessoas */}
-      <div className="modal fade" id="modalPessoa" tabIndex={-1} aria-hidden="true">
-        <div className="modal-dialog">
+      {showModal && (
+      <div className="modal show d-block modal-anim-fade" id="modalPessoa" tabIndex={-1}>
+        <div className="modal-dialog modal-anim-slide">
           <div className="modal-content">
             <div className="modal-header bg-light">
               <h5 className="modal-title">{idEdit ? "Editar Pessoa" : "Cadastrar Pessoa"}</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" id="btnFecharModal"></button>
+              <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
             </div>
             <form onSubmit={salvarPessoa}>
               <div className="modal-body">
@@ -144,13 +137,15 @@ export function Pessoas() {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Cancelar</button>
                 <button type="submit" className="btn btn-primary">Confirmar</button>
               </div>
             </form>
           </div>
         </div>
       </div>
+      )}
+      {showModal && <div className="modal-backdrop show modal-anim-fade-backdrop"></div>}
     </div>
   );
 }
