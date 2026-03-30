@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_URL } from '../config/api.ts';
 
 //#region Interfaces
 interface PessoaTotal {
@@ -36,12 +37,12 @@ export function Totais() {
 
   // Buscas dos totais
   useEffect(() => {
-    fetch('http://localhost:5078/api/Pessoa/totais')
+    fetch(`${API_URL}/Pessoa/totais`)
       .then(res => res.json())
       .then(data => setResumoPessoas(data))
       .catch(err => console.error("Erro Pessoas:", err));
 
-    fetch('http://localhost:5078/api/Categoria/totais')
+    fetch(`${API_URL}/Categoria/totais`)
       .then(res => res.json())
       .then(data => setResumoCategorias(data))
       .catch(err => console.error("Erro Categorias:", err));

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_URL } from '../config/api.ts';
 
 const TipoFinalidade = {
   Despesa: 1,
@@ -19,7 +20,7 @@ export function Categorias() {
   const [showModal, setShowModal] = useState(false);
 
   const carregarCategorias = () => {
-    fetch('http://localhost:5078/api/Categoria')
+    fetch(`${API_URL}/Categoria`)
       .then(res => res.json())
       .then(data => setCategorias(data))
   };
@@ -38,7 +39,7 @@ export function Categorias() {
   const salvarCategoria = (e: React.FormEvent) => {
     e.preventDefault();
 
-    fetch('http://localhost:5078/api/Categoria', {
+    fetch(`${API_URL}/Categoria`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ descricao, finalidade })

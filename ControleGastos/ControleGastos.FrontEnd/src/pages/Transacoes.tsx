@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_URL } from '../config/api.ts';
 
 //#region Enums para um melhor entendimento do código
 const TipoFinalidade = {
@@ -53,9 +54,9 @@ export function Transacoes() {
 
   const carregarDados = async () => {
     const [resT, resP, resC] = await Promise.all([
-      fetch('http://localhost:5078/api/Transacao'),
-      fetch('http://localhost:5078/api/Pessoa'),
-      fetch('http://localhost:5078/api/Categoria')
+      fetch(`${API_URL}/Transacao`),
+      fetch(`${API_URL}/Pessoa`),
+      fetch(`${API_URL}/Categoria`)
     ]);
 
     setTransacoes(await resT.json());
@@ -81,7 +82,7 @@ export function Transacoes() {
     // Função para criar uma nova Transação
     const novaTransacao = { descricao, valor, tipo, pessoaId, categoriaId };
 
-    fetch('http://localhost:5078/api/Transacao', {
+    fetch(`${API_URL}/Transacao`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(novaTransacao)

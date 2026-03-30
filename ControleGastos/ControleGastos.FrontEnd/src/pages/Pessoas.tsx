@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_URL } from '../config/api.ts';
 
 interface Pessoa {
   id: number;
@@ -14,7 +15,7 @@ export function Pessoas() {
   const [showModal, setShowModal] = useState(false);
 
   const carregarPessoas = () => {
-    fetch('http://localhost:5078/api/Pessoa')
+    fetch(`${API_URL}/Pessoa`)
       .then(res => res.json())
       .then(data => setPessoas(data));
   };
@@ -26,7 +27,7 @@ export function Pessoas() {
   // Função para excluir o cadastro de uma pessoa.
   const excluirPessoa = (id: number) => {
     if (window.confirm("Deseja realmente excluir esta pessoa e suas transações?")) {
-      fetch(`http://localhost:5078/api/Pessoa/${id}`, { method: 'DELETE' })
+      fetch(`${API_URL}/Pessoa/${id}`, { method: 'DELETE' })
         .then(res => {
           if (res.ok) carregarPessoas();
         });
@@ -54,7 +55,7 @@ export function Pessoas() {
     
     const dados = { nome, idade: Number(idade) };
     const metodo = idEdit ? 'PUT' : 'POST';
-    const url = idEdit ? `http://localhost:5078/api/Pessoa/${idEdit}` : 'http://localhost:5078/api/Pessoa';
+    const url = idEdit ? `${API_URL}/Pessoa/${idEdit}` : `${API_URL}/Pessoa`;
 
     fetch(url, {
       method: metodo,
