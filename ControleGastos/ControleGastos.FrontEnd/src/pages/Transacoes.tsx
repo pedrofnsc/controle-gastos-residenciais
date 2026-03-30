@@ -64,7 +64,7 @@ export function Transacoes() {
   };  
 
   //#region Filtros das regras de negócio.
-  const pessoasFiltradas = tipo === TipoFinalidade.Receita ? pessoas.filter(p => p.idade >= 18) : pessoas; //Selecionar somente maiores de 18 anos para os dropdowns de Receita.
+  const pessoasFiltradas = tipo === TipoTransacao.Receita ? pessoas.filter(p => p.idade >= 18) : pessoas; //Selecionar somente maiores de 18 anos para os dropdowns de Receita.
 
   const categoriasFiltradas = categorias.filter(c => {  //Selecionar as Categorias dos seus respectivos tipos nos dropdowns.
     if (tipo === TipoTransacao.Receita){
@@ -134,10 +134,10 @@ export function Transacoes() {
               <td>{categorias.find(c => c.id === t.categoriaId)?.descricao}</td>
               <td>
                 <span className={`badge ${t.tipo === TipoTransacao.Receita ? 'bg-success' : 'bg-danger'}`}>
-                  {t.tipo === TipoFinalidade.Receita ? 'Receita' : 'Despesa'}
+                  {t.tipo === TipoTransacao.Receita ? 'Receita' : 'Despesa'}
                 </span>
               </td>
-              <td className={`fw-bold ${t.tipo === TipoFinalidade.Receita ? 'text-success' : 'text-danger'}`}>
+              <td className={`fw-bold ${t.tipo === TipoTransacao.Receita ? 'text-success' : 'text-danger'}`}>
                 R$ {t.valor.toFixed(2)}
               </td>
             </tr>
