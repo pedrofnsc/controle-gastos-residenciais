@@ -9,7 +9,7 @@ interface Pessoa {
 export function Pessoas() {
   const [pessoas, setPessoas] = useState<Pessoa[]>([]);
   const [nome, setNome] = useState('');
-  const [idade, setIdade] = useState<number>(0);
+  const [idade, setIdade] = useState<number | string>('');
   const [idEdit, setIdEdit] = useState<number | null>(null);
 
   const carregarPessoas = () => {
@@ -43,14 +43,14 @@ export function Pessoas() {
   const limparFormulario = () => {
     setIdEdit(null);
     setNome('');
-    setIdade(0);
+    setIdade('');
   };
 
   // Função para salvar o cadastro ou a edição.
   const salvarPessoa = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const dados = { nome, idade };
+    const dados = { nome, idade: Number(idade) };
     const metodo = idEdit ? 'PUT' : 'POST';
     const url = idEdit ? `http://localhost:5078/api/Pessoa/${idEdit}` : 'http://localhost:5078/api/Pessoa';
 
@@ -140,7 +140,7 @@ export function Pessoas() {
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Idade</label>
-                  <input type="number" className="form-control" value={idade} onChange={e => setIdade(Number(e.target.value))} required />
+                  <input type="number" className="form-control" value={idade} onChange={e => setIdade(e.target.value === '' ? '' : Number(e.target.value))} required />
                 </div>
               </div>
               <div className="modal-footer">
