@@ -144,7 +144,7 @@ export function Transacoes() {
           ))}
           {transacoes.length === 0 && (
             <tr>
-              <td colSpan={3} className="text-center text-muted py-4">
+              <td colSpan={6} className="text-center text-muted py-4">
                 Nenhuma transação cadastrada.
               </td>
             </tr>
